@@ -1,0 +1,17 @@
+version: '3'
+services:
+  vue-app:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    depends_on:
+      - Dockerfile
+
+  other-service:
+    image: Dockerfile
+    ports:
+      - "9000:9000"
+    environment:
+      - SOME_ENV_VAR=some_value
