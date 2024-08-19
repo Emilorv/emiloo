@@ -33,7 +33,7 @@ jobs:
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa emil@emiloo.no << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/git-rasp_rsa emil@emiloo.no << 'EOF'
           docker pull ${{ secrets.DOCKER_USERNAME }}/emiloo-website:latest
           docker stop emiloo-container || true
           docker rm emiloo-container || true
