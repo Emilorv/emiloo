@@ -1,11 +1,10 @@
 <template>
-  <vue-draggable-resizable class="window" :w=fit-content :h=fit-content :parent="true">
     <div class="cli-terminal">
       <div class="output">
         <div v-for="(line, index) in output" :key="index">
           <div v-if="line.type === 'command'"><span class="prompt">$</span> {{ line.text }}</div>
           <div v-else class="output-result ">
-            <div class="typewriter">{{ line.text }}</div>
+            <p class="typewriter">{{ line.text }}</p>
           </div>
         </div>
       </div>
@@ -14,7 +13,6 @@
         <input v-model="currentInput" @keydown.enter="handleCommand"/>
       </div>
     </div>
-  </vue-draggable-resizable>
 </template>
 <script>
 import commandHandler from '../commandHandler.js'
@@ -114,18 +112,20 @@ input {
 
 .output-result {
   color: rgba(239, 237, 237, 0.99);
-  width: fit-content;
+  width: 100%;
 }
 
 
 .typewriter {
   overflow: hidden;
+  overflow-wrap: anywhere;
   border-right: .15em solid transparent; /* The typwriter cursor */
   white-space: nowrap; /* Keeps the content on a single line */
   letter-spacing: .10em; /* Adjust as needed */
   animation: typing 2s steps(144, end),
   blink-caret 0.75s step-start 5;
-  width: fit-content;
+  width: 100%;
+
 }
 
 .disco {

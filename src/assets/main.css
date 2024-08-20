@@ -4,7 +4,18 @@ body {
 }
 
 #app {
-  height: 100vh;
+  height: 90vh;
+}
+
+.cli-terminal {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 80%;
+  max-width: 400px;
+}
+.cli-terminal .output {
+  overflow-wrap: break-word;
 }
 
 /*# sourceMappingURL=main.css.map */
