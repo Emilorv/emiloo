@@ -1,0 +1,21 @@
+<template>
+    <div class="terminal-page">
+      <CliTerminal></CliTerminal>
+    </div>
+</template>
+
+<script>
+import CliTerminal from "@/components/CliTerminal.vue";
+
+export default {
+    name: "TerminalView",
+    components: {CliTerminal}
+}
+</script>
+<style scoped>
+
+.terminal-page{
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(101,101,101,1) 27%, rgba(0,0,0,1) 39%);
+}
+</style>
