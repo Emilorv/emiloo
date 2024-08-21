@@ -9,13 +9,10 @@ body{
 }
 
 
-
 .cli-terminal{
-    position: absolute;
-    right: 2px;
-    bottom: 2px;
     width: 80%;
-    max-width: 400px;
+    max-width: 1000px;
+    margin: auto;
 
     & .output{
         overflow-wrap: break-word;

@@ -74,7 +74,7 @@ export default {
   color: #fff;
   border-radius: 10px;
   border: white solid 2px;
-  height: 300px;
+    height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
