@@ -63,11 +63,6 @@ export default {
 </script>
 
 <style scoped>
-
-.window{
-  height: fit-content;
-  width: fit-content;
-}
 .cli-terminal {
   font-family: monospace;
   background-color: #000;
