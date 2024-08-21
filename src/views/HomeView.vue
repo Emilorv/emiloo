@@ -13,15 +13,17 @@
               <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
           </svg>
       </div>
-      <section class="content-section">
-
-          <div class="glow-effect"></div>
-          <div class="card">
-              <h1>Welcome to a Cozy Corner</h1>
-              <p>This is a cozy, warm spot on the web.</p>
-          </div>
-          <a href="/cli">terminal</a>
-
+      <header>
+          <nav class="nav">
+              <RouterLink class="nav-link" to="cli">Terminal</RouterLink>
+          </nav>
+      </header>
+      
+      <section class="content-container">
+              <div class="links">
+                  <a href="https://linkedin.com/in/emil-orvik-olsson"><img width="100px" src="https://skillicons.dev/icons?i=linkedin" alt=""></a>
+                  <a href="https://github.com/Emilorv"><img width="100px" src="https://skillicons.dev/icons?i=github" alt=""></a>
+              </div>
       </section>
   </main>
 </template>
@@ -50,12 +52,6 @@ main{
     }
 }
 
-.content-section{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .wave {
     position: relative;
     bottom: 0;
@@ -77,27 +73,40 @@ main{
     fill: #BEA6A1  ;
 }
 
+header{
+    max-width: 600px;
+    display: flex;
+    margin: 10px auto 10px auto;
+    padding: 10px 0 10px 0;
 
-.glow-effect {
-    background: radial-gradient(circle at top left, rgba(255, 200, 150, 0.5), transparent);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 300px;
-    height: 300px;
-    z-index: -1;
+    .nav {
+        list-style: none;
+        font-size: 30px;
+        padding: 10px 0 10px 0;
+
+
+        .nav-link{
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            &:hover{
+                background-color: darkslategray;
+            }
+        }
+    }
+    border-bottom: solid black 3px;
 }
 
-.card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.content-container{
+    max-width: 600px;
+    margin: auto;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2), 0 6px 10px rgba(0, 0, 0, 0.1);
+.links{
+    display: flex;
+    gap: 30px;
+    justify-content: center;
 }
+
 </style>
