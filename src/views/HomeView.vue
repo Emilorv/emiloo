@@ -1,12 +1,11 @@
-<script setup>
-</script>
 
 <template>
   <main>
       <section class="top-section">
       <h1 class="title">Velkommen til Emiloo.no</h1>
-
+          <canvas id="bg"></canvas>
       </section>
+
 
       <div class="wave">
           <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -110,3 +109,5 @@ header{
 }
 
 </style>
+<script setup>
+</script>
