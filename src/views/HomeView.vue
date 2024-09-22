@@ -74,13 +74,17 @@ main{
     width: 300px;
     
     @media  (min-width: 700px) {
-        width: 500px;
+        width: 400px;
     }
 }
 
 .text{
-    padding: 50px;
-    font-size: 30px;
+    padding: 50px 40px 50px 40px;
+    font-size: 16px;
+
+    @media  (min-width: 700px) {
+        font-size: 30px;
+    }
 }
 
 .arrows{
