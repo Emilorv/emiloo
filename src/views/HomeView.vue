@@ -47,6 +47,7 @@ main{
 }
 
 .top-section{
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -85,6 +86,11 @@ main{
     @media  (min-width: 700px) {
         font-size: 30px;
     }
+}
+
+.bold{
+    text-align: center;
+    font-weight: 700;
 }
 
 .arrows{
