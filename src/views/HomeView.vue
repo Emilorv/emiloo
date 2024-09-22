@@ -5,7 +5,19 @@
   <main>
       <section class="top-section">
       <h1 class="title">Velkommen til Emiloo.no</h1>
-
+          <img class="image" src="../assets/svg/oter.svg" alt="oter med arbeidshatt">
+          <label for="image">Tegning: Emil Orvik Olsson</label>
+          <div class="text">
+          <p class="bold">Her er det ikke noe innhold enda.</p>
+              <br>
+            <p>Emil er nok for opptatt med studiet og deltidsjobb, men en gang i fremtiden vil det komme noe kult her!</p>
+              <br>
+          <p class=""> Hvis du er henvist fra en jobbsøknad anbefaler jeg å sjekke ut lenkene til Github og LinkedIn nedenfor </p>
+          </div>
+          <div class="arrows">
+          <p>|</p>
+          <p>V</p>
+          </div>
       </section>
 
       <div class="wave">
@@ -14,11 +26,10 @@
           </svg>
       </div>
       <header>
-          <nav class="nav">
+          <nav v-show="false" class="nav">
               <RouterLink class="nav-link" to="cli">Terminal</RouterLink>
           </nav>
       </header>
-      
       <section class="content-container">
               <div class="links">
                   <a href="https://linkedin.com/in/emil-orvik-olsson"><img width="100px" src="https://skillicons.dev/icons?i=linkedin" alt=""></a>
