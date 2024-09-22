@@ -41,17 +41,23 @@
 
 <style scoped>
 main{
-    height: 100vh;
-    background-color: #56423E;
+    padding-bottom: 50px;
+    min-height: 100vh;
+    background-color: rgba(67, 152, 171, 0.49);
 }
 
 .top-section{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: linear-gradient(180deg, #ffcdb6 0%, #BEA6A1 50%);
+    align-items: center;
+    background: linear-gradient(180deg, #ffffff 0%, #ffffff 50%);
     position: relative;
-    height: 50vh;
+    min-height: 50vh;
+    padding: 20px;
+
+    p{
+    }
 }
 
 .title{
@@ -60,6 +66,29 @@ main{
 
     @media (min-width: 600px) {
         font-size: 60px;
+    }
+}
+
+.image{
+    padding: 30px;
+    width: 300px;
+    
+    @media  (min-width: 700px) {
+        width: 500px;
+    }
+}
+
+.text{
+    padding: 50px;
+    font-size: 30px;
+}
+
+.arrows{
+    text-align: center;
+    font-size: 32px;
+
+    p{
+        margin-top: -12px
     }
 }
 
@@ -81,7 +110,7 @@ main{
 }
 
 .wave .shape-fill {
-    fill: #BEA6A1  ;
+    fill: #ffffff;
 }
 
 header{
@@ -106,7 +135,7 @@ header{
             }
         }
     }
-    border-bottom: solid black 3px;
+    //border-bottom: solid black 3px;
 }
 
 .content-container{
