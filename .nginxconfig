@@ -1,0 +1,51 @@
+server {
+    listen 443 ssl;
+    server_name emiloo.no www.emiloo.no;
+    ssl_certificate /etc/letsencrypt/live/emiloo.no/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/emiloo.no/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    location / {
+        proxy_pass http://localhost:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+server {
+    listen 443 ssl;
+    server_name blog.emiloo.no www.blog.emiloo.no;
+    ssl_certificate /etc/letsencrypt/live/emiloo.no/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/emiloo.no/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    root /var/www/html/web;
+
+    index index.php index.html;
+
+    location = /resources/css/site.min.css {
+        root /var/www/html/web;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string; 
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params; 
+        fastcgi_pass 127.0.0.1:5001;  
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+}
+
+server {
+    listen 80;
+    server_name emiloo.no blog.emiloo.no www.emiloo.no www.blog.emiloo.no;
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
