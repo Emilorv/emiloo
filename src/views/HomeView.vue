@@ -12,7 +12,7 @@
               <br>
             <p>Emil er nok for opptatt med studiet og deltidsjobb, men en gang i fremtiden vil det komme noe kult her!</p>
               <br>
-          <p class=""> Hvis du er henvist fra en jobbsøknad anbefaler jeg å sjekke ut lenkene til Github og LinkedIn nedenfor </p>
+          <p class=""> Sjekk ut lenkene til Github og LinkedIn nedenfor </p>
           </div>
           <div class="arrows">
           <p>|</p>
@@ -145,7 +145,7 @@ header{
             }
         }
     }
-    //border-bottom: solid black 3px;
+    /* border-bottom: solid black 3px; */
 }
 
 .content-container{
