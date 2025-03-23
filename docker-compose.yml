@@ -6,12 +6,9 @@ services:
       - "8080:8080"
     volumes:
       - .:/app
-    depends_on:
-      - Dockerfile
+    networks:
+      - nginx-proxy-network
 
-  other-service:
-    image: Dockerfile
-    ports:
-      - "9000:9000"
-    environment:
-      - SOME_ENV_VAR=some_value
+networks:
+  nginx-proxy-network:
+    external: true
