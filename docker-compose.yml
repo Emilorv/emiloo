@@ -2,6 +2,7 @@ version: '3'
 services:
   emiloo-homepage:
     build: .
+    image: emiloo/homepage:latest
     container_name: emiloo-homepage
     ports:
       - "5000:5000"
