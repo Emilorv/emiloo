@@ -3,7 +3,7 @@ services:
   vue-app:
     build: .
     ports:
-      - "8080:8080"
+      - "5000:5000"
     volumes:
       - .:/app
     networks:
