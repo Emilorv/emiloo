@@ -1,6 +1,6 @@
 version: '3'
 services:
-  vue-app:
+  emiloo-website:
     build: .
     ports:
       - "5000:5000"
