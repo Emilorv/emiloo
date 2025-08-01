@@ -1,17 +1,14 @@
 version: '3'
 services:
-  vue-app:
+  emiloo-homepage:
     build: .
+    image: emiloo/homepage:latest
+    container_name: emiloo-homepage
     ports:
-      - "8080:8080"
-    volumes:
-      - .:/app
-    depends_on:
-      - Dockerfile
+      - "5000:5000"
+    networks:
+      - nginx-proxy-network
 
-  other-service:
-    image: Dockerfile
-    ports:
-      - "9000:9000"
-    environment:
-      - SOME_ENV_VAR=some_value
+networks:
+  nginx-proxy-network:
+    external: true

@@ -3,7 +3,7 @@
   <main>
       <section class="top-section">
         <h1 class="title">Emiloo</h1>  
-        <img src="" alt="">
+        <img class="image" src="../assets/svg/oter.svg" alt="oter med arbeidshatt">
         <p></p>
       </section>
       <section>
@@ -28,6 +28,12 @@
     @media (min-width: 600px) {
         font-size: 60px;
     }
+}
+
+.image{
+    display: block;
+    margin: auto;
+    width: 300px;
 }
 
 </style>
