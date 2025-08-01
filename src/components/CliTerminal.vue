@@ -63,20 +63,25 @@ export default {
 </script>
 
 <style scoped>
+
 .cli-terminal {
   font-family: monospace;
   background-color: #000;
   color: #fff;
   border-radius: 10px;
   border: white solid 2px;
-    height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  width: 80%;
+  max-width: 1000px;
+  margin: auto;
 }
 
 .output {
   white-space: pre-wrap;
+  overflow-wrap: break-word;
   overflow-y: auto;
   flex-grow: 1;
   padding: 10px;
