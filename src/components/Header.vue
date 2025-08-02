@@ -34,7 +34,6 @@
     max-width: 100%;
 
     @include breakpoint(medium){
-        width: 100%;
         max-width: 1440px;
         margin: auto;
         padding: 2rem 2rem;
