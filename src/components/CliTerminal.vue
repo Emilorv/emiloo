@@ -15,7 +15,7 @@
     </div>
 </template>
 <script>
-import commandHandler from '../commandHandler.js'
+import commandHandler from '../scripts/commandHandler.js'
 
 export default {
   data() {
