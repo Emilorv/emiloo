@@ -13,7 +13,7 @@
         </div>
       </section>
 
-      <section class="projects section">
+      <section id="prosjekter" class="projects section">
         <h2 class="projects-title title">Prosjekter</h2>
         <div class="projects-grid">
           <EntryComponent
@@ -28,14 +28,22 @@
         </div>
       </section>
 
-      <section class="skills section">
+      <section id="ferdigheter" class="skills section">
         <h2 class="skills-title title">Dette har jeg vært borti</h2>
-        <div>
-
+        <div class="skills-grid">
+            <EntryComponent
+              v-for="skill in skills"
+              :key="skill.id"
+              :title="skill.title"
+              :description="skill.description"
+              :img-src="skill.imgSrc"
+              :emoji="skill.emoji"
+              :link="skill.link"
+            />
         </div>
       </section>
 
-      <section class="side-quests section">
+      <section id="sidequests" class="side-quests section">
         <h2 class="side-quests-title title">Sidequests</h2>
         <div class="side-quests-grid">
           <EntryComponent
@@ -55,6 +63,7 @@
 <script setup>
 import EntryComponent from '../components/EntryComponent.vue'
 import { projects, sideQuests } from '../data/projects.js'
+import { skills } from '../data/skills.js'
 </script>
 
 <style scoped lang="scss">
@@ -107,6 +116,7 @@ import { projects, sideQuests } from '../data/projects.js'
 }
 
 .projects-grid,
+.skills-grid,
 .side-quests-grid {
     display: grid;
     grid-template-columns: 1fr;

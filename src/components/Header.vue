@@ -5,6 +5,13 @@
                 <span class="logo__text">Emiloo</span>
             </div>
         </a>
+
+        <nav class="nav">
+            <a class="nav-link" href="/#prosjekter">Prosjekter</a>
+            <a class="nav-link" href="/#ferdigheter">Ferdigheter</a>
+            <a class="nav-link" href="/#sidequests">Sidequests</a>
+        </nav>
+
         <nav class="extra__nav">
             <ul>
                 <li><a href="https://infoboks.emiloo.no"><img class="infoboks__image" src="/src/assets/boks_cropped.png" alt=""></a></li>
@@ -18,6 +25,10 @@
 <style scoped lang="scss">
 
 .header{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    align-items: center;
     height: 5rem;
     padding: 1rem;
     max-width: 100%;
@@ -60,14 +71,33 @@
 }
 
 .logo__link{
+    display: block;
     text-decoration: none;
     color: black;
     font-weight: bold;
+    width: fit-content;
 }
 
 .logo__text{
     position: relative;
     z-index: 2;
+}
+
+.nav{
+    display: none;
+    flex-direction: row;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+
+    @include breakpoint(medium){
+        display: flex;
+    }
+    
+    a{
+        text-decoration: none;
+        font-weight: 700;
+        color: black;
+    }
 }
 
 .extra__nav{

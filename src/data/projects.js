@@ -13,13 +13,6 @@ export const projects = [
         imgSrc: "/src/assets/svg/oter.svg",
         link: "/"
     },
-    {
-        id: 103,
-        title: "Terminal Simulator",
-        description: "Interaktiv terminal-simulator i nettleseren",
-        imgSrc: "/src/assets/svg/blyant.svg",
-        link: "/cli"
-    }
 ];
 
 export const sideQuests = [
@@ -36,5 +29,12 @@ export const sideQuests = [
         description: "Visualisering av livet i uker",
         imgSrc: "/src/assets/svg/blyant.svg",
         link: "/livskalender"
+    },
+    {
+        id: 103,
+        title: "Terminal Simulator",
+        description: "Interaktiv terminal-simulator i nettleseren",
+        imgSrc: "/src/assets/svg/blyant.svg",
+        link: "/cli"
     }
 ];
