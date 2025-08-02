@@ -9,12 +9,15 @@
             <br>
             <p>Jeg er dataingeniør med spesialisering i programvaresystemer.</p>
             <br>
-            <p>I tillegg har jeg praktisk erfaring som webutvikler.</p>
+            <p>Ved siden av studiene har jeg hatt fartstid som webutvikler.</p>
+            <br>
+            <p>Jeg synes teknologi er spennende, men aller best liker jeg å samarbeide med andre for å løse problemer.</p>
         </div>
       </section>
 
       <section id="prosjekter" class="projects section">
         <h2 class="projects-title title">Prosjekter</h2>
+        <p class="section__description">Dette er prosjektene jeg er stoltest av.</p>
         <div class="projects-grid">
           <EntryComponent
             v-for="project in projects"
@@ -30,6 +33,7 @@
 
       <section id="ferdigheter" class="skills section">
         <h2 class="skills-title title">Dette har jeg vært borti</h2>
+        <p class="section__description">Dette er noen av ferdighetene jeg har tilegnet meg. Nivået er av varierende grad, avhengig avene stammer fra det jeg har lært gjennom fartstid som webutvikler, studier og egne prosjekter.</p>
         <div class="skills-grid">
             <EntryComponent
               v-for="skill in skills"
@@ -45,6 +49,7 @@
 
       <section id="sidequests" class="side-quests section">
         <h2 class="side-quests-title title">Sidequests</h2>
+        <p class="section__description">Denne seksjonen er kanskje mer for meg enn for dere, men jeg legger det ved i tilfelle dere er nysgjerrige og vil bli bedre kjent.</p>
         <div class="side-quests-grid">
           <EntryComponent
             v-for="quest in sideQuests"
@@ -72,6 +77,7 @@ import { skills } from '../data/skills.js'
     position: relative;
     font-size: 40px;
     width: fit-content;
+    margin-bottom: 1rem;
     
     @include breakpoint(medium){
         font-size: 60px;
@@ -113,6 +119,12 @@ import { skills } from '../data/skills.js'
     max-width: 1440px;
     margin: auto;
     padding: 2rem 1rem;
+}
+
+.section__description {
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    color: #555;
 }
 
 .projects-grid,
