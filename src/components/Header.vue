@@ -98,6 +98,28 @@
         font-weight: 700;
         color: black;
     }
+
+    
+    .nav-link{
+        position: relative;
+        &::after{
+            position: absolute;
+            content: '';
+            display: block;
+            width: 0;
+            height: 4px;
+            bottom: 2px;
+            background: #FFD400;
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+        &:hover{
+            &::after{
+                width: 100%;
+            }
+        }
+            
+    }
 }
 
 .extra__nav{
