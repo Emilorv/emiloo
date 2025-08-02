@@ -19,7 +19,7 @@
                         @change="parseDateInput"
                         :class="{ 'error': birthDateInput && !isValidDateFormat }"
                     />
-                    <small v-if="isDateComplete" class="error-text">
+                    <small v-if="birthDateInput && !isValidDateFormat" class="error-text">
                         Ugyldig format. Bruk DD.MM.YYYY
                     </small>
                     <button @click="saveDate" :disabled="birthDateInput && !isValidDateFormat">Lagre dato</button>
@@ -32,17 +32,35 @@
 
                 <p>Antall uker siden fødsel: {{ weeksSinceBirth }}</p>
                 <p>Antall uker siden bursdag i fjor: {{ weeksSinceLastBirthday }}</p>
+                <p>Bonusuker: {{ bonusWeeks }} </p>
 
             </section>
+            <p>En dott representerer en uke i livet ditt.</p>
             <div v-if="savedDate" class="life-calendar">
                 <template v-for="week in 5200" :key="week">
                     <div v-if="week % 52 === 0" class="year-label">{{ Math.floor(week / 52) }}</div>
-                    <div v-else-if="week <= weeksSinceBirth" class="week"></div>
-                    <div v-else class="week-empty"></div>
+                    <div
+                        v-else-if="week <= weeksSinceBirth" 
+                        class="week" 
+                        :class="{ 'animate-in': shouldAnimate }"
+                        :style="shouldAnimate ? { animationDelay: `${week * 1}ms` } : {}" >
+                    </div>
+                    <div
+                        v-else 
+                        class="week-empty" 
+                       >
+                    </div>
                 </template>
             </div>
-            <section class="">
-               <p>Denne kalenderen er </p>
+            <section class="text-section">
+               <p>Kalenderen er inspirert av Kurtzgesagts "Calendar of your Life" som igjen er inspirert av 
+                <a href="https://waitbutwhy.com/2014/05/life-weeks.html">"Your Life in Weeks" av Tim Urban</a>.</p>
+                
+                <p></p>
+
+               <iframe class="video-embed" width="420" height="315"
+                 src="https://www.youtube.com/embed/JXeJANDKwDc" frameborder="0" allowfullscreen>
+                </iframe>
             </section>
         </section>
 
@@ -61,6 +79,7 @@
                 birthDay: null,
                 birthMonth: null,
                 birthYear: null,
+                shouldAnimate: false,
             }
         },
         computed: {
@@ -78,8 +97,14 @@
                 if (!this.birthDate) return 0;
                 const today = new Date();
                 const diffTime = today - this.birthDate;
-                const extraTimeDueToLeapYears = Math.floor((today.getFullYear() - this.birthDate.getFullYear()) / 4);
+                const extraTimeDueToLeapYears = Math.floor((today.getFullYear() - this.birthDate.getFullYear())/ 4 *5/7);
                 return Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7) - (extraTimeDueToLeapYears || 0));
+            },
+            bonusWeeks() {
+                if (!this.birthDate) return 0;
+                const today = new Date();
+                const extraTimeDueToLeapYears = Math.floor((today.getFullYear() - this.birthDate.getFullYear())/ 4 *5/7);
+                return extraTimeDueToLeapYears;
             },
             lastBirthday() {
                 if (!this.birthDate) return null;
@@ -157,12 +182,14 @@
                 if (this.isDateComplete) {
                     this.savedDate = true;
                     localStorage.setItem('birthDateInput', this.birthDateInput);
+                    this.shouldAnimate = true;
                 } else {
                     alert('Vennligst skriv inn en gyldig fødselsdato.');
                 }
             },
             resetDate() {
                 this.savedDate = false;
+                this.shouldAnimate = false;
                 this.birthDateInput = '';
                 this.birthDay = null;
                 this.birthMonth = null;
@@ -177,6 +204,7 @@
             
             if(this.isDateComplete) {
                 this.savedDate = true;
+                this.shouldAnimate = false;
             } else {
                 this.savedDate = false;
             }
@@ -188,7 +216,7 @@
 .content {
     max-width: 1440px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 2rem 0;
 }
 
 .birth-inputs {
@@ -307,19 +335,27 @@
 }
 
 .year-label {
-    font-size: 1rem;
+    font-size: 0.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
+
+    @include breakpoint(medium){
+        font-size: 1rem;
+    }
 }
 
 .week, .week-empty {
-    width: 10px;
-    height: 10px;
+    width: 5px;
+    height: 5px;
     border: 1px solid #ddd;
     border-radius: 16px;
     box-sizing: border-box;
+
+    opacity: 1;
+    transform: scale(1);
+
 
     @include breakpoint(medium){
         width: 20px;
@@ -329,9 +365,37 @@
 
 .week {
     background-color: #000000;
+     &.animate-in {
+       background-color: #f0f0f0;
+        animation: weekSpawnIn 0.2s ease forwards;
+    }
 }
 
 .week-empty {
     background-color: #f0f0f0;
+}
+
+@keyframes weekSpawnIn {
+    0% {
+        background-color: #f0f0f0;
+    }
+    100% {
+        background-color: #000000;
+    }
+}
+
+.text-section{
+    margin-top: 2rem;
+    font-size: 1.2rem;
+}
+
+.video-embed {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 1000px;
+    margin: 2rem auto;
+    border: none;
+    aspect-ratio: 16/9;
 }
 </style>

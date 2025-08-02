@@ -26,7 +26,7 @@ export const sideQuests = [
     {
         id: 202,
         title: "Livskalender",
-        description: "Visualisering av livet i uker",
+        description: "Visualisering av livet i uker. Advarsel: Kan gi eksistensiell krise",
         imgSrc: "/src/assets/svg/blyant.svg",
         link: "/livskalender"
     },
