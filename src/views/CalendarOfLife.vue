@@ -7,60 +7,43 @@
                 <h2>Skriv inn fødselsdato</h2>
                 <p>(Dette lagres kun lokalt i din nettleser)</p>
                 
-                <div class="date-inputs">
-                    <div class="input-group">
-                        <label for="day">Dag:</label>
-                        <input 
-                            id="day"
-                            type="number" 
-                            v-model.number="birthDay" 
-                            min="1" 
-                            max="31" 
-                            placeholder="DD"
-                        />
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="month">Måned:</label>
-                        <select id="month" v-model.number="birthMonth">
-                            <option value="">Velg måned</option>
-                            <option v-for="(month, index) in months" :key="index" :value="index + 1">
-                                {{ month }}
-                            </option>
-                        </select>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="year">År:</label>
-                        <input 
-                            id="year"
-                            type="number" 
-                            v-model.number="birthYear" 
-                            :min="currentYear - 120" 
-                            :max="currentYear"
-                            placeholder="YYYY"
-                        />
-                    </div>
-                    <button @click="saveDate">Lagre dato</button>
+                <div class="date-input-container">
+                    <label for="birthdate">Fødselsdato:</label>
+                    <input 
+                        id="birthdate"
+                        type="text" 
+                        v-model="birthDateInput"
+                        placeholder="DD.MM.YYYY"
+                        maxlength="10"
+                        @input="formatDateInput"
+                        @change="parseDateInput"
+                        :class="{ 'error': birthDateInput && !isValidDateFormat }"
+                    />
+                    <small v-if="isDateComplete" class="error-text">
+                        Ugyldig format. Bruk DD.MM.YYYY
+                    </small>
+                    <button @click="saveDate" :disabled="birthDateInput && !isValidDateFormat">Lagre dato</button>
                 </div>
             </div>
 
-            <div v-if="savedDate" class="calendar-display">
+            <section v-if="savedDate" class="calendar-display">
                 <p>Din fødselsdato: {{ formatBirthDate }}</p>
                 <button @click="resetDate">Endre dato</button>
 
                 <p>Antall uker siden fødsel: {{ weeksSinceBirth }}</p>
                 <p>Antall uker siden bursdag i fjor: {{ weeksSinceLastBirthday }}</p>
 
-                <div class="life-calendar">
-                    <template v-for="week in 5200" :key="week">
-                        <div v-if="week % 52 === 0" class="year-label">{{ Math.floor(week / 52) }}</div>
-                        <div v-else-if="week <= weeksSinceBirth" class="week"></div>
-                        <div v-else class="week-empty"></div>
-                    </template>
-                </div>
+            </section>
+            <div v-if="savedDate" class="life-calendar">
+                <template v-for="week in 5200" :key="week">
+                    <div v-if="week % 52 === 0" class="year-label">{{ Math.floor(week / 52) }}</div>
+                    <div v-else-if="week <= weeksSinceBirth" class="week"></div>
+                    <div v-else class="week-empty"></div>
+                </template>
             </div>
-
+            <section class="">
+               <p>Denne kalenderen er </p>
+            </section>
         </section>
 
     </main>
@@ -74,6 +57,7 @@
         data() {
             return {
                 savedDate: false,
+                birthDateInput: '',
                 birthDay: null,
                 birthMonth: null,
                 birthYear: null,
@@ -82,12 +66,6 @@
         computed: {
             currentYear() {
                 return new Date().getFullYear();
-            },
-            months() {
-                return [
-                    'Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni',
-                    'Juli', 'August', 'September', 'Oktober', 'November', 'Desember'
-                ];
             },
             isDateComplete() {
                 return this.birthDay && this.birthMonth && this.birthYear;
@@ -100,7 +78,24 @@
                 if (!this.birthDate) return 0;
                 const today = new Date();
                 const diffTime = today - this.birthDate;
+                const extraTimeDueToLeapYears = Math.floor((today.getFullYear() - this.birthDate.getFullYear()) / 4);
+                return Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7) - (extraTimeDueToLeapYears || 0));
+            },
+            lastBirthday() {
+                if (!this.birthDate) return null;
+                let today = new Date();
+
+                return new Date(this.currentYear - 1, this.birthMonth - 1, this.birthDay);
+            },
+            weeksSinceLastBirthday() {
+                if (!this.lastBirthday) return 0;
+                const today = new Date();
+                const diffTime = today - this.lastBirthday;
                 return Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
+            },
+            isValidDateFormat() {
+                const dateRegex = /^\d{2}\.\d{2}\.\d{4}$/;
+                return dateRegex.test(this.birthDateInput);
             },
             formatBirthDate() {
                 if (!this.birthDate) return '';
@@ -110,42 +105,76 @@
                     year: 'numeric'
                 });
             },
-            lastBirthday() {
-                if (!this.birthDate) return null;
-                return new Date(this.currentYear - 1, this.birthMonth - 1, this.birthDay);
-            },
-            weeksSinceLastBirthday() {
-                if (!this.lastBirthday) return 0;
-                const today = new Date();
-                const diffTime = today - this.lastBirthday;
-                return Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
-            }
         },
         methods: {
+            formatDateInput(event) {
+                let value = event.target.value.replace(/[^\d]/g, ''); // Remove non-digits
+                
+                if (value.length >= 3 && value.length <= 4) {
+                    value = value.substring(0, 2) + '.' + value.substring(2);
+                } else if (value.length >= 5) {
+                    value = value.substring(0, 2) + '.' + value.substring(2, 4) + '.' + value.substring(4, 8);
+                }
+                
+                this.birthDateInput = value;
+            },
+            parseDateInput() {
+                if (!this.isValidDateFormat) {
+                    this.birthDay = null;
+                    this.birthMonth = null;
+                    this.birthYear = null;
+                    return;
+                }
+                
+                const parts = this.birthDateInput.split('.');
+                const day = parseInt(parts[0]);
+                const month = parseInt(parts[1]);
+                const year = parseInt(parts[2]);
+                
+                // Validate date values
+                const currentYear = new Date().getFullYear();
+                if (day >= 1 && day <= 31 && 
+                    month >= 1 && month <= 12 && 
+                    year >= currentYear - 120 && year <= currentYear) {
+                    
+                    // Additional validation for valid date
+                    const testDate = new Date(year, month - 1, day);
+                    if (testDate.getDate() === day && 
+                        testDate.getMonth() === month - 1 && 
+                        testDate.getFullYear() === year) {
+                        
+                        this.birthDay = day;
+                        this.birthMonth = month;
+                        this.birthYear = year;
+                        return;
+                    }
+                }
+                this.birthDay = null;
+                this.birthMonth = null;
+                this.birthYear = null;
+            },
             saveDate() {
                 if (this.isDateComplete) {
                     this.savedDate = true;
-                    localStorage.setItem('birthDay', this.birthDay);
-                    localStorage.setItem('birthMonth', this.birthMonth);
-                    localStorage.setItem('birthYear', this.birthYear);
+                    localStorage.setItem('birthDateInput', this.birthDateInput);
                 } else {
-                    alert('Vennligst fyll ut alle feltene.');
+                    alert('Vennligst skriv inn en gyldig fødselsdato.');
                 }
             },
             resetDate() {
                 this.savedDate = false;
+                this.birthDateInput = '';
                 this.birthDay = null;
                 this.birthMonth = null;
                 this.birthYear = null;
-                localStorage.removeItem('birthDay');
-                localStorage.removeItem('birthMonth');
-                localStorage.removeItem('birthYear');
+                localStorage.removeItem('birthDateInput');
             }
         },
         mounted() {
-            this.birthDay = parseInt(localStorage.getItem('birthDay')) || null;
-            this.birthMonth = parseInt(localStorage.getItem('birthMonth')) || null;
-            this.birthYear = parseInt(localStorage.getItem('birthYear')) || null;
+            this.birthDateInput = localStorage.getItem('birthDateInput') || '';
+            this.parseDateInput();
+
+            
             if(this.isDateComplete) {
                 this.savedDate = true;
             } else {
@@ -159,13 +188,16 @@
 .content {
     max-width: 1440px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 0 2rem;
 }
 
 .birth-inputs {
+    position: relative;
+    height: calc(100vh - 200px);
     text-align: center;
     
     h2 {
+        margin-top: 20vh;
         margin-bottom: 0.5rem;
     }
     
@@ -175,54 +207,66 @@
         font-size: 0.9rem;
     }
     
-    .date-inputs {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-        
-        @include breakpoint(medium) {
-            flex-wrap: nowrap;
-        }
-    }
-    
-    .input-group {
+    .date-input-container {
         display: flex;
         flex-direction: column;
-        min-width: 120px;
+        align-items: center;
+        gap: 1rem;
         
         label {
-            margin-bottom: 0.5rem;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
         }
         
-        input, select {
-            padding: 0.75rem;
+        input[type="text"] {
+            padding: 1rem;
             border: 2px solid #ddd;
             border-radius: 5px;
-            font-size: 1rem;
+            font-size: 1.5rem;
             text-align: center;
+            width: 200px;
+            letter-spacing: 2px;
             
             &:focus {
                 border-color: #FFD400;
                 outline: none;
             }
-        }
-        
-        input[type="number"] {
-            appearance: textfield;
-            -moz-appearance: textfield;
             
-            &::-webkit-outer-spin-button,
-            &::-webkit-inner-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
+            &.error {
+                border-color: #ff4444;
+            }
+            
+            &::placeholder {
+                color: #aaa;
+                letter-spacing: 1px;
             }
         }
         
-        select {
+        .error-text {
+            color: #ff4444;
+            font-size: 0.85rem;
+            margin-top: -0.5rem;
+        }
+        
+        button {
+            padding: 1rem 2rem;
+            background-color: #FFD400;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            
+            &:hover:not(:disabled) {
+                background-color: #e6c000;
+                transform: translateY(-2px);
+            }
+            
+            &:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+            }
         }
     }
 }
@@ -251,6 +295,8 @@
 .life-calendar {
     display: grid;
     grid-template-columns: 1fr repeat(51, 1fr);
+    justify-items: center;
+    align-items: center;
     margin-top: 2rem;
     overflow-x: auto;
     
@@ -271,14 +317,14 @@
 .week, .week-empty {
     width: 10px;
     height: 10px;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    box-sizing: border-box;
 
     @include breakpoint(medium){
         width: 20px;
         height: 20px;
     }
-    border: 1px solid #ddd;
-    border-radius: 16px;
-    box-sizing: border-box;
 }
 
 .week {
