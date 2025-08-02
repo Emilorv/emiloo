@@ -15,11 +15,19 @@
     </header>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 
 .header{
     height: 5rem;
     padding: 1rem;
+    max-width: 100%;
+
+    @include breakpoint(medium){
+        width: 100%;
+        max-width: 1440px;
+        margin: auto;
+        padding: 2rem 2rem;
+    }
 }
 
 .logo{
@@ -65,16 +73,23 @@
 .extra__nav{
     position: absolute;
     top: 0.5rem;
-    right: 2rem;
+    right: 0.1rem;
+
+    @include breakpoint(medium){
+        top: 1rem;
+        right: 2rem;
+    }
 
     ul{
         display: flex;
+        align-items: center;
+        justify-content: center;
         flex-direction: column;
         gap: 1rem;
         list-style: none;
         width: fit-content;
 
-        @media (min-width: 600px) {
+        @include breakpoint(medium){
             flex-direction: row;
         }
     }
