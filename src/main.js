@@ -13,6 +13,3 @@ app.use(router)
 app.component("vue-draggable-resizable", VueDraggableResizable)
 
 app.mount('#app')
-
-
-import('./scripts/threejs.js')
