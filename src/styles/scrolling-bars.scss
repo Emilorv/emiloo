@@ -1,0 +1,17 @@
+[data-scroll-bar] {
+    position: relative;
+    --scroll-bar-width: 0%;
+}
+
+[data-scroll-bar]::after {
+    content: '';
+    position: absolute;
+    bottom: 0.5rem;
+    border-radius: 4px;
+    display:block;
+    height: 0.5rem;
+    z-index: -1;
+    background-color: #FFD400;
+    width: var(--scroll-bar-width);
+    transition: width 0.1s ease-out;
+}

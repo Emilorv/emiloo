@@ -16,7 +16,7 @@
       </section>
 
       <section id="prosjekter" class="projects section">
-        <h2 class="projects-title title">Prosjekter</h2>
+        <h2 class="projects-title title" data-scroll-bar>Prosjekter</h2>
         <p class="section__description">Dette er prosjektene jeg er stoltest av.</p>
         <div class="projects-grid">
           <EntryComponent
@@ -32,8 +32,9 @@
       </section>
 
       <section id="ferdigheter" class="skills section">
-        <h2 class="skills-title title">Dette har jeg vært borti</h2>
-        <p class="section__description">Dette er noen av ferdighetene jeg har tilegnet meg. Nivået er av varierende grad, avhengig avene stammer fra det jeg har lært gjennom fartstid som webutvikler, studier og egne prosjekter.</p>
+        <h2 class="skills-title title" data-scroll-bar>Dette har jeg vært borti</h2>
+        <p class="section__description">Dette er noen av ferdighetene jeg har tilegnet meg
+          gjennom jobb, studie, verv og egne prosjekter.</p>
         <div class="skills-grid">
             <EntryComponent
               v-for="skill in skills"
@@ -48,7 +49,7 @@
       </section>
 
       <section id="sidequests" class="side-quests section">
-        <h2 class="side-quests-title title">Sidequests</h2>
+        <h2 class="side-quests-title title" data-scroll-bar>Sidequests</h2>
         <p class="section__description">Denne seksjonen er kanskje mer for meg enn for dere, men jeg legger det ved i tilfelle dere er nysgjerrige og vil bli bedre kjent.</p>
         <div class="side-quests-grid">
           <EntryComponent
@@ -81,18 +82,6 @@ import { skills } from '../data/skills.js'
     
     @include breakpoint(medium){
         font-size: 60px;
-    }
-
-    &::after{
-        content: '';
-        position: absolute;
-        bottom: 0.5rem;
-        border-radius: 4px;
-        display:block;
-        width: 100%;
-        height: 0.5rem;
-        z-index: -1;
-        background-color: #FFD400;
     }
 }
 
@@ -145,5 +134,15 @@ import { skills } from '../data/skills.js'
 }
 
 </style>
-<script setup>
+<script>
+import ScrollingBars from '../scripts/scrolling-bars.js'
+const scrollBars = new ScrollingBars();
+scrollBars.init();
+
+export default {
+  mounted() {
+    scrollBars.init();
+
+  }
+}
 </script>
