@@ -4,38 +4,41 @@
         <h1 hidden>Livskalenderen</h1>
         <section class="content">
             <div v-if="!savedDate" class="birth-inputs">
-                <h2>Skriv inn fødselsdato</h2>
-                <p>(Dette lagres kun lokalt i din nettleser)</p>
-                
-                <div class="date-input-container">
-                    <label for="birthdate">Fødselsdato:</label>
-                    <input 
-                        id="birthdate"
-                        type="text" 
-                        v-model="birthDateInput"
-                        placeholder="DD.MM.YYYY"
-                        maxlength="10"
-                        @input="formatDateInput"
-                        @change="parseDateInput"
-                        :class="{ 'error': birthDateInput && !isValidDateFormat }"
-                    />
-                    <small v-if="birthDateInput && !isValidDateFormat" class="error-text">
-                        Ugyldig format. Bruk DD.MM.YYYY
-                    </small>
-                    <button @click="saveDate" :disabled="birthDateInput && !isValidDateFormat">Lagre dato</button>
+                <div class="birth-inputs__container">
+                    <h2>Skriv inn fødselsdato</h2>
+                    <p>(Dette lagres kun lokalt i din nettleser)</p>
+                    
+                    <div class="date-input-container">
+                        <label for="birthdate">Fødselsdato:</label>
+                        <input 
+                            id="birthdate"
+                            type="text" 
+                            v-model="birthDateInput"
+                            placeholder="DD.MM.YYYY"
+                            maxlength="10"
+                            @input="formatDateInput"
+                            @change="parseDateInput"
+                            @keyup.enter="saveDate"
+                            :class="{ 'error': birthDateInput && !isValidDateFormat }"
+                        />
+                        <small class="error-text" :class="{ 'error-text--visible': errorTextVisible }">
+                            Ugyldig format. Bruk DD.MM.YYYY
+                        </small>
+                        <button @click="saveDate" :disabled="birthDateInput && !isValidDateFormat">Lagre dato</button>
+                    </div>
                 </div>
             </div>
 
             <section v-if="savedDate" class="calendar-display">
                 <p>Din fødselsdato: {{ formatBirthDate }}</p>
+                
+                <p>Uker siden fødsel: {{ weeksSinceBirth }}</p>
+                <p>Uker siden bursdag: {{ weeksSinceLastBirthday }}</p>
+                <p>Bonusuker fra skuddår: {{ bonusWeeks }} </p>
+                
                 <button @click="resetDate">Endre dato</button>
-
-                <p>Antall uker siden fødsel: {{ weeksSinceBirth }}</p>
-                <p>Antall uker siden bursdag i fjor: {{ weeksSinceLastBirthday }}</p>
-                <p>Bonusuker: {{ bonusWeeks }} </p>
-
             </section>
-            <p>En dott representerer en uke i livet ditt.</p>
+            <p v-if="savedDate">En dott representerer én uke i livet ditt.</p>
             <div v-if="savedDate" class="life-calendar">
                 <template v-for="week in 5200" :key="week">
                     <div v-if="week % 52 === 0" class="year-label">{{ Math.floor(week / 52) }}</div>
@@ -53,8 +56,8 @@
                 </template>
             </div>
             <section class="text-section">
-               <p>Kalenderen er inspirert av Kurtzgesagts "Calendar of your Life" som igjen er inspirert av 
-                <a href="https://waitbutwhy.com/2014/05/life-weeks.html">"Your Life in Weeks" av Tim Urban</a>.</p>
+               <p>Kalenderen er inspirert av Kurtzgesagts <a href=""></a> "Calendar of your Life" som igjen er inspirert av 
+                <a href="https://waitbutwhy.com/2014/05/life-weeks.html">"Your Life in Weeks"</a> av Tim Urban.</p>
                 
                 <p></p>
 
@@ -83,11 +86,26 @@
             }
         },
         computed: {
-            currentYear() {
-                return new Date().getFullYear();
-            },
             isDateComplete() {
                 return this.birthDay && this.birthMonth && this.birthYear;
+            },
+            isValidDateFormat() {
+                const dateRegex = /^\d{2}\.\d{2}\.\d{4}$/;
+                return dateRegex.test(this.birthDateInput);
+            },
+            errorTextVisible() {
+                return this.birthDateInput.length > 9 && !this.isValidDateFormat;
+            },
+            formatBirthDate() {
+                if (!this.birthDate) return '';
+                return this.birthDate.toLocaleDateString('nb-NO', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            },
+            currentYear() {
+                return new Date().getFullYear();
             },
             birthDate() {
                 if (!this.isDateComplete) return null;
@@ -100,17 +118,15 @@
                 const extraTimeDueToLeapYears = Math.floor((today.getFullYear() - this.birthDate.getFullYear())/ 4 *5/7);
                 return Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7) - (extraTimeDueToLeapYears || 0));
             },
-            bonusWeeks() {
-                if (!this.birthDate) return 0;
-                const today = new Date();
-                const extraTimeDueToLeapYears = Math.floor((today.getFullYear() - this.birthDate.getFullYear())/ 4 *5/7);
-                return extraTimeDueToLeapYears;
-            },
             lastBirthday() {
                 if (!this.birthDate) return null;
                 let today = new Date();
 
-                return new Date(this.currentYear - 1, this.birthMonth - 1, this.birthDay);
+                const lastBirthday = new Date(this.currentYear, this.birthMonth - 1, this.birthDay);
+                if (today < lastBirthday) {
+                    lastBirthday.setFullYear(this.currentYear - 1);
+                }
+                return lastBirthday;
             },
             weeksSinceLastBirthday() {
                 if (!this.lastBirthday) return 0;
@@ -118,17 +134,11 @@
                 const diffTime = today - this.lastBirthday;
                 return Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
             },
-            isValidDateFormat() {
-                const dateRegex = /^\d{2}\.\d{2}\.\d{4}$/;
-                return dateRegex.test(this.birthDateInput);
-            },
-            formatBirthDate() {
-                if (!this.birthDate) return '';
-                return this.birthDate.toLocaleDateString('nb-NO', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                });
+            bonusWeeks() {
+                if (!this.birthDate) return 0;
+                const today = new Date();
+                const extraTimeDueToLeapYears = Math.floor((today.getFullYear() - this.birthDate.getFullYear())/ 4 *5/7);
+                return extraTimeDueToLeapYears;
             },
         },
         methods: {
@@ -216,16 +226,26 @@
 .content {
     max-width: 1440px;
     margin: 0 auto;
-    padding: 2rem 0;
+    padding: 0;
+
+    @include breakpoint(medium) {
+        padding: 0 2rem;
+    }
 }
 
 .birth-inputs {
     position: relative;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 112px);
     text-align: center;
+
+    &__container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -75%);
+    }
     
     h2 {
-        margin-top: 20vh;
         margin-bottom: 0.5rem;
     }
     
@@ -274,6 +294,11 @@
             color: #ff4444;
             font-size: 0.85rem;
             margin-top: -0.5rem;
+            opacity: 0;
+
+            &--visible{
+                opacity: 1;
+            }
         }
         
         button {
@@ -385,6 +410,8 @@
 }
 
 .text-section{
+    margin: auto;
+    max-width: 800px;
     margin-top: 2rem;
     font-size: 1.2rem;
 }
