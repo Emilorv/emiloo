@@ -10,7 +10,7 @@ export const skills = [
   {
     id: 2,
     title: 'Backend utvikling',
-    description: 'Erfaring med server-side språk som PHP og databasehåndtering med MySQL',
+    description: 'Erfaring med server-side språk som PHP og Java Spring Boot. Databasehåndtering med MySQL',
     imgSrc: '',
     emoji: '🖥️',
     link: '#'

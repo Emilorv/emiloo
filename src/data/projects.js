@@ -19,9 +19,9 @@ export const sideQuests = [
     {
         id: 201,
         title: "Piano",
-        description: "Eksperimentering med Three.js og 3D-grafikk",
+        description: "En samling av pianostykker jeg har spilt inn",
         emoji: "🎹",
-        link: "/threejs"
+        link: "/piano"
     },
     {
         id: 202,
@@ -31,9 +31,16 @@ export const sideQuests = [
         link: "/livskalender"
     },
     {
-        id: 103,
-        title: "Terminal Simulator",
-        description: "Interaktiv terminal-simulator i nettleseren",
+        id: 203,
+        title: "Three.js",
+        description: "Eksperimentering med Three.js og 3D-grafikk",
+        emoji: "🌌",
+        link: "/threejs"
+    },
+    {
+        id: 204,
+        title: "CLI",
+        description: "Min egen CLI i nettleseren",
         imgSrc: "/src/assets/svg/blyant.svg",
         link: "/cli"
     }
