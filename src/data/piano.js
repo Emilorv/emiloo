@@ -42,9 +42,21 @@ export const pianoPieces = [
         audioFile: "src/assets/audio/ventus-theme.mp3",
         slides: [
             {
-                timestamp: 6,
-                image: "/src/assets/pianoImages/ventus-room.jpg"
-            }
+                timestamp: 3,
+                image: "/src/assets/pianoImages/ventus/land-of-departure.jpg"
+            },
+            {
+                timestamp: 22,
+                image: "/src/assets/pianoImages/ventus/after-dark.png"
+            },
+            {
+                timestamp: 45,
+                image: "/src/assets/pianoImages/ventus/ventus-heart.png"
+            },
+            {
+                timestamp: 60,
+                image: "/src/assets/pianoImages/ventus/ventus-dive-to-heart.jpeg"
+            },
         ]
     }
 ]

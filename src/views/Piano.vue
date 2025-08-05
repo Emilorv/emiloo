@@ -11,11 +11,13 @@
             <p>Fra: {{ this.currentPiece.origin }}</p>
             <p>Original komponist: {{ this.currentPiece.originalComposer }}</p>
         </div>
-        <audio
+        <audio v-if="this.currentPiece.audioFile"
             class="piano-controls__audio"
             ref="audioPlayer"
             @timeupdate="handleTimeUpdate"
-            controls>
+            controls
+            :key="this.currentPiece.audioFile"
+            >
             <source :src="this.currentPiece.audioFile" type="audio/mp3">
             Your browser does not support the audio element.
         </audio>
