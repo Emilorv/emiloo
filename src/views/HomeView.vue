@@ -22,11 +22,13 @@
           <EntryComponent
             v-for="project in projects"
             :key="project.id"
+            type="modal"
             :title="project.title"
             :description="project.description"
             :img-src="project.imgSrc"
             :emoji="project.emoji"
-            :link="project.link"
+            :modal-content="project.content"
+            @open-modal="openModal"
           />
         </div>
       </section>
@@ -39,11 +41,13 @@
             <EntryComponent
               v-for="skill in skills"
               :key="skill.id"
+              type="modal"
               :title="skill.title"
               :description="skill.description"
               :img-src="skill.imgSrc"
               :emoji="skill.emoji"
-              :link="skill.link"
+              :modal-content="skill.content"
+              @open-modal="openModal"
             />
         </div>
       </section>
@@ -55,6 +59,7 @@
           <EntryComponent
             v-for="quest in sideQuests"
             :key="quest.id"
+            type="link"
             :title="quest.title"
             :description="quest.description"
             :img-src="quest.imgSrc"
@@ -63,13 +68,33 @@
           />
         </div>
       </section>
+      <Modal 
+        :is-open="modalOpen" 
+        :data="modalData" 
+        @close="closeModal" 
+      />
   </main>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import EntryComponent from '../components/EntryComponent.vue'
+import Modal from '../components/Modal.vue'
 import { projects, sideQuests } from '../data/projects.js'
 import { skills } from '../data/skills.js'
+
+const modalOpen = ref(false)
+const modalData = ref({})
+
+const openModal = (data) => {
+    modalData.value = data
+    modalOpen.value = true
+}
+
+const closeModal = () => {
+    modalOpen.value = false
+    modalData.value = {}
+}
 </script>
 
 <style scoped lang="scss">
