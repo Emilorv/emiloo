@@ -23,8 +23,6 @@ export default class ScrollingBars {
         const barStart = viewportHeight * 2 / 6;
         const bartStop = viewportHeight * 5 / 6;
 
-        console.log('barStart:', barStart, 'bartStop:', bartStop);
-
         this.titles.forEach(title => {
             const rect = title.getBoundingClientRect();
             const titleCenter = rect.top + (rect.height / 2);
