@@ -136,15 +136,20 @@
     }
 
     ul{
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         align-items: center;
-        justify-content: center;
+        justify-items: center;
         flex-direction: column;
-        gap: 1rem;
+        row-gap: 0.5rem;
+        direction: rtl;
         list-style: none;
         width: fit-content;
 
         @include breakpoint(medium){
+            display: flex;
+            direction: ltr;
+            column-gap: 1rem;
             flex-direction: row;
         }
     }
