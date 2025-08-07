@@ -36,7 +36,10 @@
     @include breakpoint(medium){
         max-width: 1440px;
         margin: auto;
-        padding: 2rem 2rem;
+    }
+    
+    @include breakpoint(xxlarge){
+        padding: 2rem;
     }
 }
 
@@ -90,6 +93,7 @@
 
     @include breakpoint(medium){
         display: flex;
+        gap: 2rem;
     }
     
     a{
