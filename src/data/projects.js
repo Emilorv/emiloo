@@ -3,14 +3,14 @@ export const projects = [
         id: 101,
         title: "Infoboks",
         description: "Samle informasjon på ett sted",
-        imgSrc: "/src/assets/boks_cropped.png",
+        imgSrc: "/assets/boks_cropped.png",
         link: "https://infoboks.emiloo.no"
     },
     {
         id: 102,
         title: "Personlig nettside",
         description: "Min personlige nettside bygget med Vue.js",
-        imgSrc: "/src/assets/svg/oter.svg",
+        imgSrc: "/assets/svg/oter.svg",
         link: "/"
     },
 ];
@@ -27,7 +27,7 @@ export const sideQuests = [
         id: 202,
         title: "Livskalender",
         description: "Visualisering av livet i uker. Advarsel: Kan gi eksistensiell krise",
-        imgSrc: "/src/assets/svg/blyant.svg",
+        imgSrc: "/assets/svg/blyant.svg",
         link: "/livskalender"
     },
     {
@@ -41,7 +41,7 @@ export const sideQuests = [
         id: 204,
         title: "CLI",
         description: "Min egen CLI i nettleseren",
-        imgSrc: "/src/assets/svg/blyant.svg",
+        imgSrc: "/assets/svg/blyant.svg",
         link: "/cli"
     }
 ];

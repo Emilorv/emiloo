@@ -3,7 +3,7 @@
   <main>
       <section class="top-section">
         <h1 hidden class="title">Emiloo</h1>  
-        <img class="image" src="../assets/svg/oter.svg" alt="oter med arbeidshatt">
+        <img class="image" src="/assets/svg/oter.svg" alt="oter med arbeidshatt">
         <div class="introduction">
             <p class="introduction__bigger"> Hei! Jeg er Emil.</p>
             <br>

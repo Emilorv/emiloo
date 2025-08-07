@@ -14,7 +14,7 @@
 
         <nav class="extra__nav">
             <ul>
-                <li><a href="https://infoboks.emiloo.no"><img class="infoboks__image" src="/src/assets/boks_cropped.png" alt=""></a></li>
+                <li><a href="https://infoboks.emiloo.no"><img class="infoboks__image" src="/assets/boks_cropped.png" alt=""></a></li>
                 <li><a href="https://github.com/Emilorv"><img width="2rem" src="https://skillicons.dev/icons?i=github" alt=""></a></li>
                 <li><a href="https://linkedin.com/in/emil-orvik-olsson"><img width="2rem" src="https://skillicons.dev/icons?i=linkedin" alt=""></a></li>
             </ul>
