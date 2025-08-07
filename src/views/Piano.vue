@@ -1,11 +1,11 @@
 <template>
 <main class="piano-page">
-    <div class="piano-buttons">
-        <template v-for="piece in this.pieces">
-            <button class="piano-button" @click="changePiece(piece)">{{ piece.title }}</button>
-        </template>
-    </div>
     <div class="piano-page__content">
+        <div class="piano-buttons">
+            <template v-for="piece in this.pieces">
+                <button class="piano-button" @click="changePiece(piece)">{{ piece.title }}</button>
+            </template>
+        </div>
         <div class="piano-controls">
             <div v-if="this.currentPiece" class="piano-piece">
                 <div class="piano-controls__info">
@@ -23,16 +23,25 @@
                     <source :src="this.currentPiece.audioFile" type="audio/mp3">
                     Your browser does not support the audio element.
                 </audio>
-                <div class="piano-slides">
-                    <div 
-                        v-for="(slide, index) in this.currentPiece.slides" 
-                        class="piano-slide"
-                        :class="{ active: currentSlideIndex === index }"
-                    >
-                        <img :src="slide.image" :alt="`Slide at ${slide.timestamp} seconds`">
-                    </div>
-                </div>
             </div>
+        </div>
+        <div v-if="this.currentPiece" class="piano-slides--small">
+            <div 
+                v-for="(slide, index) in this.currentPiece.slides" 
+                class="piano-slide--small"
+                :class="{ active: currentSlideIndex === index }"
+            >
+            <img :src="slide.image" :alt="`Slide at ${slide.timestamp} seconds`">
+            </div>
+        </div>
+    </div>
+    <div v-if="this.currentPiece" class="piano-slides">
+        <div 
+            v-for="(slide, index) in this.currentPiece.slides" 
+            class="piano-slide"
+            :class="{ active: currentSlideIndex === index }"
+        >
+            <img :src="slide.image" :alt="`Slide at ${slide.timestamp} seconds`">
         </div>
     </div>
 </main>
@@ -90,35 +99,45 @@ export default {
 <style scoped lang="scss">
 .piano-page{
     position: relative;
+    margin: 0;
+    padding: 0;
 }
 
 .piano-page__content{
+    display: flex;
+    flex-direction: column;
     max-width: 800px;
     padding-top: 1rem;
+    padding-bottom: 1rem;
     margin: auto;
 }
 
 .piano-controls{
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255);
     border-radius: 8px;
 }
 
 .piano-buttons {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    max-width: 800px;
-    margin: auto;
-    gap: 1rem;
+    overflow-x: auto;
+    padding: 1rem;
+    gap: 0.5rem;
 }
 
 .piano-button {
-    margin: 5px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+    background-color: white;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    
+    &:hover{
+        background-color: #FFD400;
+    }
 }
 
 .piano-piece {
@@ -130,9 +149,16 @@ export default {
 
 .piano-controls__info {
     display: flex;
+    flex-direction: column;
     gap: 1rem;
-    align-items: center;
     flex-shrink: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    
+    @include breakpoint(medium){
+        flex-direction: row;
+        align-items: center;
+    }
 }
 
 .piano-controls__audio{
@@ -155,10 +181,26 @@ export default {
   opacity: 0;
   z-index: -1;
   transition: opacity 1s ease-in-out;
-  image-rendering: pixelated;
+  filter: blur(5px);
 }
 
-.piano-slide img {
+.piano-slides--small{
+    position: relative;
+    display: block;
+    margin-top: 2rem;
+    height: 400px
+}
+
+.piano-slide--small{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.piano-slide img, .piano-slide--small img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -170,7 +212,12 @@ export default {
     display: block;
 }
 
-.piano-slide.active {
-  opacity: 1;
+.piano-slide--small img{
+    object-fit: contain;
+    object-position: top;
+}
+
+.piano-slide.active, .piano-slide--small.active {
+    opacity: 1;
 }
 </style>
