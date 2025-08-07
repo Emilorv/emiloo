@@ -374,7 +374,7 @@
 .week, .week-empty {
     width: 5px;
     height: 5px;
-    border: 1px solid #ddd;
+    border: 0.25px solid #ddd;
     border-radius: 16px;
     box-sizing: border-box;
 
@@ -383,6 +383,7 @@
 
 
     @include breakpoint(medium){
+        border: 1px solid #ddd;
         width: 20px;
         height: 20px;
     }
